@@ -3,6 +3,9 @@
  */
 const Hapi = require('hapi')
 const routes = require('./setup/routes')
+const Inert = require('inert')
+const Vision = require('vision')
+const hapiSwagger = require('./setup/swagger')
 
 const server = Hapi.server({
   port: 3000,
@@ -10,6 +13,11 @@ const server = Hapi.server({
   debug: { log: ['*'], request: ['*'] }
 })
 
-server.register(routes)
-  .then(() => server.start() )
-  .then(() => console.log(`server running at: ${server.info.uri}`))
+server.register([
+  Inert,
+  Vision,
+  hapiSwagger,
+  ...routes,
+])
+.then(() => server.start() )
+.then(() => console.log(`server running at: ${server.info.uri}`))
