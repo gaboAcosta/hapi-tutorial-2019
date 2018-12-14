@@ -6,6 +6,7 @@ const routes = require('./setup/routes')
 const Inert = require('inert')
 const Vision = require('vision')
 const hapiSwagger = require('./setup/swagger')
+const sequelizeSetup = require('./setup/sequelize')
 
 const server = Hapi.server({
   port: 3000,
@@ -17,6 +18,7 @@ server.register([
   Inert,
   Vision,
   hapiSwagger,
+  sequelizeSetup,
   ...routes,
 ])
 .then(() => server.start() )

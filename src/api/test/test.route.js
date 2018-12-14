@@ -13,12 +13,13 @@ module.exports = {
       path: '/',
       config: {
         tags: ['api'],
-        handler(req){
+        async handler(req){
+          const { db } = server
+          const model = db.models.test
           const { name } = req.payload
-          return {
-            message: `Hello ${name}`,
-            filtered: 'Some value!'
-          }
+          const testObject = await model.create({ name })
+
+          return testObject.get({ plain: true })
         },
         response: {
           modify: true,
@@ -26,7 +27,8 @@ module.exports = {
             stripUnknown: true,
           },
           schema: Joi.object().keys({
-            message: Joi.string()
+            id: Joi.number(),
+            name: Joi.string()
           })
         },
         validate: {

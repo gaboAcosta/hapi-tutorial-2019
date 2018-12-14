@@ -4,7 +4,7 @@
 const glob = require('glob')
 const plugins = []
 
-glob.sync('../src/api/**/*route.js', {
+glob.sync('../src/api/**/*.route.js', {
   realpath: true,
   cwd: __dirname,
 }).forEach((filePath) => {
